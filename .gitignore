@@ -1,0 +1,8 @@
+.terraform
+plan.tfstate
+kubeconfig
+manifests.yaml
+default-cluster-issuer.yaml
+ingress.yaml
+terraform.tfvars
+charts

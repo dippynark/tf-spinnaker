@@ -1,0 +1,33 @@
+# provider
+project = "<project>"
+region = "europe-west1"
+zone = "europe-west1-b"
+
+# vpc
+# Nodes (4096): 10.0.16.0/20, 10.0.32.0/20 ...
+subnetwork_cidr_range = "10.0.16.0/20"
+
+# kubernetes
+cluster_name = "spinnaker"
+cluster_additional_zones = []
+cluster_min_master_version = "1.10"
+# Pods (4096 * 256): 10.16.0.0/12, 10.32.0.0/12 ...
+# Service (4096): 10.1.0.0/20, 10.2.0.0/20 ...
+cluster_pod_cidr_range = "10.16.0.0/12"
+cluster_service_cidr_range = "10.1.0.0/20"
+# Masters (4): 10.0.0.16/28, 10.0.0.32/28 ...
+cluster_master_ipv4_cidr_block = "10.0.0.16/28"
+cluster_master_authorized_cidr = "0.0.0.0/0"
+cluster_autoscaling_min_node_count = "1"
+cluster_autoscaling_max_node_count = "10"
+cluster_machine_type = "n1-standard-2"
+gcp_account = "<email>"
+
+# spinnaker
+storage_bucket_name = "<storage_bucket_name>"
+spinnaker_version = "1.9.5"
+spinnaker_oauth_client_id = "<client_id>"
+spinnaker_oauth_client_secret = "<client_secret>"
+spinnaker_oauth_provider = "github"
+spinnaker_deck_domain = "spinnaker.example.com"
+spinnaker_gate_domain = "gate.spinnaker.example.com"

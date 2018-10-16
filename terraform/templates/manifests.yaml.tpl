@@ -216,15 +216,10 @@ spec:
                   --user=spinnaker        
                 kubectl config use-context spinnaker
 
-                # ensure entrypoint
-                # https://github.com/spinnaker/spinnaker/issues/3357
-                until pgrep -f '/opt/halyard/bin/halyard'
-                do
-                  sleep 1
-                done
-
                 # halyard                
-                until hal --ready
+                # https://github.com/spinnaker/spinnaker/issues/3357
+                # https://github.com/spinnaker/halyard/blob/master/halyard-cli/src/main/java/com/netflix/spinnaker/halyard/cli/services/v1/Daemon.java#L80
+                until curl http://localhost:8064/health | grep -i "up"
                 do
                   sleep 1
                 done

@@ -182,6 +182,8 @@ spec:
           value: "${gcp_project}"
         - name: GCS_STORAGE_BUCKET_NAME
           value: "${gcs_storage_bucket_name}"
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /home/spinnaker/.gcp/gcs-service-account.json
         - name: KUBECONFIG
           value: /home/spinnaker/.hal/kubeconfig
         - name: CLIENT_ID
@@ -232,7 +234,7 @@ spec:
                 hal config deploy edit --type distributed --account-name default
                 hal config storage gcs edit --project "$${GCP_PROJECT}" \
                   --bucket "$${GCS_STORAGE_BUCKET_NAME}" \
-                  --json-path /home/spinnaker/.gcp/gcs-service-account.json
+                  --json-path "$${GOOGLE_APPLICATION_CREDENTIALS}"
                 hal config storage edit --type gcs
                 hal config version edit --version "$${VERSION}"
 

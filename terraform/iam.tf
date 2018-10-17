@@ -1,10 +1,10 @@
 # https://github.com/spinnaker/spinnaker.github.io/issues/443#issuecomment-408913130-permalink
 resource "random_id" "entropy" {
-  byte_length = 8
+  byte_length = 6
 }
 
 resource "google_service_account" "spinnaker" {
-  account_id   = "spinnaker-gcs-account-${random_id.entropy.hex}"
+  account_id   = "spinnaker-gcs-${random_id.entropy.hex}"
   display_name = "Spinnaker GCS Account"
 }
 

@@ -26,6 +26,7 @@ gcp_account = "<email>"
 # spinnaker
 storage_bucket_name = "<storage_bucket_name>"
 spinnaker_version = "1.9.5"
+# https://github.com/settings/developers
 spinnaker_oauth_client_id = "<client_id>"
 spinnaker_oauth_client_secret = "<client_secret>"
 spinnaker_oauth_provider = "github"

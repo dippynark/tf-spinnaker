@@ -2,11 +2,15 @@
 
 This repository contains resources for provisioning Spinnaker on GCP using Terraform.
 
+## Private GKE cluster
+
+To deploy Spinnaker into a [private GKE cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters) uncomment the `private_ip_google_access` field in `terraform/network.tf` and uncomment the `private_cluster_config` section in `terraform/gke.tf`
+
 ## Quickstart
 
 ```
 # edit state bucket name in Makefile
-# edit terraform.tfvars.example and rename to terraform.tfvars
+# edit terraform/terraform.tfvars.example and rename to terraform/terraform.tfvars
 make init
 make plan
 make apply

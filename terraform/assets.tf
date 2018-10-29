@@ -27,21 +27,34 @@ resource "local_file" "kubeconfig" {
   filename = "${path.module}/kubeconfig"
 }
 
-# manifests.yaml
-data "template_file" "manifests" {
-  template = "${file("${path.module}/templates/manifests.yaml.tpl")}"
+# values.yaml
+data "template_file" "values" {
+  template = "${file("${path.module}/templates/values.yaml.tpl")}"
 
   vars {
     gcp_project = "${var.project}"
-    gcs_service_account_json = "${google_service_account_key.spinnaker.private_key}"
+    gcs_service_account_json = "${base64decode(google_service_account_key.spinnaker.private_key)}"
     gcs_storage_bucket_name = "${google_storage_bucket.spinnaker.name}"
-    gcp_account = "${var.gcp_account}"
     spinnaker_version = "${var.spinnaker_version}"
     spinnaker_oauth_client_id = "${var.spinnaker_oauth_client_id}"
     spinnaker_oauth_client_secret = "${var.spinnaker_oauth_client_secret}"
     spinnaker_oauth_provider = "${var.spinnaker_oauth_provider}"
     spinnaker_deck_domain = "${var.spinnaker_deck_domain}"
     spinnaker_gate_domain = "${var.spinnaker_gate_domain}"
+  }
+}
+
+resource "local_file" "values" {
+  content  = "${data.template_file.values.rendered}"
+  filename = "${path.module}/values.yaml"
+}
+
+# manifests.yaml
+data "template_file" "manifests" {
+  template = "${file("${path.module}/templates/manifests.yaml.tpl")}"
+
+  vars {
+    gcp_account = "${var.gcp_account}"
   }
 }
 
@@ -63,4 +76,18 @@ data "template_file" "ingress" {
 resource "local_file" "ingress" {
   content  = "${data.template_file.ingress.rendered}"
   filename = "${path.module}/ingress.yaml"
+}
+
+# goldengoose.yaml
+data "template_file" "goldengoose" {
+  template = "${file("${path.module}/templates/goldengoose.yaml.tpl")}"
+
+  vars {
+    docker_dippynark_password = "${base64encode(var.docker_dippynark_password)}"
+  }
+}
+
+resource "local_file" "goldengoose" {
+  content  = "${data.template_file.goldengoose.rendered}"
+  filename = "${path.module}/goldengoose.yaml"
 }

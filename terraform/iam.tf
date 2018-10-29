@@ -31,40 +31,26 @@ resource "google_service_account" "default" {
   project = "${var.project}"
 }
 
-resource "google_project_iam_binding" "logging-log-writer" {
+resource "google_project_iam_member" "logging-log-writer" {
   role    = "roles/logging.logWriter"
   project = "${var.project}"
-
-  members = [
-    "serviceAccount:${google_service_account.default.email}",
-  ]
+  member = "serviceAccount:${google_service_account.default.email}"
 }
 
-resource "google_project_iam_binding" "monitoring-metric-writer" {
+resource "google_project_iam_member" "monitoring-metric-writer" {
   role    = "roles/monitoring.metricWriter"
   project = "${var.project}"
-
-  members = [
-    "serviceAccount:${google_service_account.default.email}",
-  ]
+  member = "serviceAccount:${google_service_account.default.email}"
 }
 
-resource "google_project_iam_binding" "monitoring-viewer" {
+resource "google_project_iam_member" "monitoring-viewer" {
   role    = "roles/monitoring.viewer"
   project = "${var.project}"
-
-  members = [
-    "serviceAccount:${google_service_account.default.email}",
-  ]
+  member = "serviceAccount:${google_service_account.default.email}"
 }
 
-/*
-resource "google_project_iam_binding" "storage-object-viewer" {
+resource "google_project_iam_member" "storage-object-viewer" {
   role    = "roles/storage.objectViewer"
   project = "${var.project}"
-
-  members = [
-    "serviceAccount:${google_service_account.default.email}",
-  ]
+  member = "serviceAccount:${google_service_account.default.email}"
 }
-*/

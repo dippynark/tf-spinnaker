@@ -66,6 +66,15 @@ resource "google_container_cluster" "spinnaker" {
     node_config {
       machine_type = "${var.cluster_machine_type}"
 
+      # https://cloud.google.com/compute/docs/access/service-accounts#usingroles
+      # https://cloud.google.com/kubernetes-engine/docs/how-to/hardening-your-cluster#reduce_node_sa_scopes
+      # https://developers.google.com/identity/protocols/googlescopes
+      oauth_scopes = [
+        "https://www.googleapis.com/auth/devstorage.read_only",
+        "https://www.googleapis.com/auth/logging.write",
+        "https://www.googleapis.com/auth/monitoring",
+      ]
+
       service_account = "${google_service_account.default.email}"
 
       metadata {

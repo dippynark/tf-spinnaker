@@ -29,3 +29,6 @@ variable "spinnaker_oauth_client_secret" {}
 variable "spinnaker_oauth_provider" {}
 variable "spinnaker_deck_domain" {}
 variable "spinnaker_gate_domain" {}
+
+# goldengoose
+variable "docker_dippynark_password" {}

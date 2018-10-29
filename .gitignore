@@ -2,7 +2,9 @@
 plan.tfstate
 kubeconfig
 manifests.yaml
+values.yaml
 default-cluster-issuer.yaml
 ingress.yaml
 terraform.tfvars
 charts
+goldengoose.yaml

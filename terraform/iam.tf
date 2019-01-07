@@ -8,12 +8,22 @@ resource "google_service_account" "spinnaker" {
   display_name = "Spinnaker GCS Account"
 }
 
-resource "google_project_iam_binding" "spinnaker" {
+resource "google_project_iam_member" "storage-admin" {
   role    = "roles/storage.admin"
+  project = "${var.project}"
+  member = "serviceAccount:${google_service_account.spinnaker.email}"
+}
 
-  members = [
-    "serviceAccount:${google_service_account.spinnaker.email}",
-  ]
+resource "google_project_iam_member" "compute-storage-admin" {
+  role    = "roles/compute.storageAdmin"
+  project = "${var.project}"
+  member = "serviceAccount:${google_service_account.spinnaker.email}"
+}
+
+resource "google_project_iam_member" "monitoring-admin" {
+  role    = "roles/monitoring.admin"
+  project = "${var.project}"
+  member = "serviceAccount:${google_service_account.default.email}"
 }
 
 resource "google_service_account_key" "spinnaker" {

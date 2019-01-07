@@ -7,7 +7,7 @@ halyard:
   # The config map should contain a script in the config.sh key
   additionalScripts:
     enabled: true
-    configMapName: additional-halyard-config
+    configMapName: spinnaker-spinnaker-additional-scripts
     configMapKey: config.sh
     # If you'd rather do an inline script, set create to true and put the content in the data dict like you would a configmap
     create: true
@@ -25,7 +25,36 @@ halyard:
 
         hal --daemon-endpoint $DAEMON_ENDPOINT config features edit --artifacts true
         hal --daemon-endpoint $DAEMON_ENDPOINT config artifact github enable
-        hal --daemon-endpoint $DAEMON_ENDPOINT config artifact github account add github-artifact-account
+        if hal --daemon-endpoint $DAEMON_ENDPOINT config artifact github account get github-artifact-account; then
+          PROVIDER_COMMAND='edit'
+        else
+          PROVIDER_COMMAND='add'
+        fi
+        hal --daemon-endpoint $DAEMON_ENDPOINT config artifact github account $PROVIDER_COMMAND github-artifact-account
+
+        hal --daemon-endpoint $DAEMON_ENDPOINT config canary enable
+        hal --daemon-endpoint $DAEMON_ENDPOINT config canary google enable
+        if hal --daemon-endpoint $DAEMON_ENDPOINT config canary google account get google-account; then
+          PROVIDER_COMMAND='edit'
+        else
+          PROVIDER_COMMAND='add'
+        fi
+        hal --daemon-endpoint $DAEMON_ENDPOINT config canary google account $PROVIDER_COMMAND google-account \
+          --project ${gcp_project} \
+          --json-path ${gcs_service_account_json_path} \
+          --bucket ${gcs_storage_bucket_name}
+        hal --daemon-endpoint $DAEMON_ENDPOINT config canary google edit --gcs-enabled true
+        hal --daemon-endpoint $DAEMON_ENDPOINT config canary prometheus enable
+        if hal --daemon-endpoint $DAEMON_ENDPOINT config canary prometheus account get prometheus-account; then
+          PROVIDER_COMMAND='edit'
+        else
+          PROVIDER_COMMAND='add'
+        fi
+        hal --daemon-endpoint $DAEMON_ENDPOINT config canary prometheus account $PROVIDER_COMMAND prometheus-account --base-url http://prometheus-server.prometheus
+        hal --daemon-endpoint $DAEMON_ENDPOINT config canary edit \
+          --default-metrics-store prometheus \
+          --default-metrics-account prometheus-account \
+          --default-storage-account google-account
 
   additionalSecrets:
     create: false

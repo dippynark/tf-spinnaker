@@ -1,0 +1,21 @@
+{
+ "attributes": {
+  "cloudProviders": [
+   "kubernetes"
+  ],
+  "createTs": "1546859770565",
+  "description": "A simple web server used for advanced Kubernetes wargaming",
+  "email": "luke.addison@jetstack.io",
+  "instancePort": 80,
+  "lastModifiedBy": "dippynark",
+  "name": "goldengoose",
+  "platformHealthOnly": false,
+  "platformHealthOnlyShowOverride": false,
+  "repoProjectKey": "dippynark",
+  "repoSlug": "goldengoose",
+  "repoType": "github",
+  "updateTs": "1546861668568"
+ },
+ "clusters": {},
+ "name": "goldengoose"
+}

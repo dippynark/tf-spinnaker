@@ -44,8 +44,8 @@ spec:
   limits:
   - defaultRequest:
       memory: 1Gi
-      cpu: 200m
-    type: Container
+      cpu: 500m
+    type: Container 
 ---
 apiVersion: extensions/v1beta1
 kind: PodSecurityPolicy

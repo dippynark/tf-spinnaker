@@ -2,7 +2,8 @@
 plan.tfstate
 kubeconfig
 manifests.yaml
-values.yaml
+spinnaker-values.yaml
+prometheus-values.yaml
 default-cluster-issuer.yaml
 ingress.yaml
 terraform.tfvars

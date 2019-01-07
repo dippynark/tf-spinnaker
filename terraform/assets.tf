@@ -27,13 +27,14 @@ resource "local_file" "kubeconfig" {
   filename = "${path.module}/kubeconfig"
 }
 
-# values.yaml
-data "template_file" "values" {
-  template = "${file("${path.module}/templates/values.yaml.tpl")}"
+# spinnaker-values.yaml
+data "template_file" "spinnaker-values" {
+  template = "${file("${path.module}/templates/spinnaker-values.yaml.tpl")}"
 
   vars {
     gcp_project = "${var.project}"
     gcs_service_account_json = "${base64decode(google_service_account_key.spinnaker.private_key)}"
+    gcs_service_account_json_path = "/opt/gcs/key.json"
     gcs_storage_bucket_name = "${google_storage_bucket.spinnaker.name}"
     spinnaker_version = "${var.spinnaker_version}"
     spinnaker_oauth_client_id = "${var.spinnaker_oauth_client_id}"
@@ -44,9 +45,14 @@ data "template_file" "values" {
   }
 }
 
-resource "local_file" "values" {
-  content  = "${data.template_file.values.rendered}"
-  filename = "${path.module}/values.yaml"
+resource "local_file" "spinnaker-values" {
+  content  = "${data.template_file.spinnaker-values.rendered}"
+  filename = "${path.module}/spinnaker-values.yaml"
+}
+
+# prometheus-values.yaml
+data "local_file" "prometheus-values" {
+    filename = "${path.module}/prometheus-values.yaml"
 }
 
 # manifests.yaml

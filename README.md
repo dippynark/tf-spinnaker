@@ -1,6 +1,12 @@
-# Spinnaker
+# Cloud Native Demos
 
-This repository contains resources for provisioning Spinnaker on GCP using Terraform.
+This project is intended to house a range of 'full stack' demos of Cloud Native applications & technologies running on Kubernetes. The project should house the configuration to spin up the demos quickly and document the process to do so.
+
+Current Demos:
+- Spinnaker pipelines triggered by GitHub webhooks
+
+Ideas for future demos:
+- Istio visualizations for a distributed applications
 
 ## Private GKE cluster
 
